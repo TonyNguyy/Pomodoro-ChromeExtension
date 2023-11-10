@@ -11,7 +11,7 @@ function Settings() {
     <div className="mt-5 p-20">
        
         <label className='font-semibold text-white text-2xl'>
-            Working: {settingsInfo.workMinutes}:00
+            Work: {settingsInfo.workMinutes}:00
         </label>
         <ReactSlider
         className=' h-[40px] border-[1px] border-green-600 rounded-[2rem] mb-10 mt-2'

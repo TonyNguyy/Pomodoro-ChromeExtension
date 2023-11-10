@@ -5,13 +5,15 @@ import PlayButton from './PlayButton';
 import PauseButton from './PauseButton';
 import SettingsButton from './SettingsButton';
 import SettingsContext from './SettingsContext';
+import Toastify from "toastify";
 
 function Timer() {
     const red = "#f54e4e";
     const green = "#4aec8c"
+    
 
     const settingsInfo = useContext(SettingsContext);
-    const [isPaused,setIsPaused] = useState(true);
+    const [isPaused,setIsPaused] = useState(false);
     const [secondsLeft, setSecondsLeft] = useState(0)
     const [mode, setMode] = useState("work") // work/ break/ null
     
@@ -25,9 +27,9 @@ function Timer() {
     const nextSeconds = (nextMode === "work" ? settingsInfo.workMinutes  : settingsInfo.breakMinutes ) * 60
     setMode(nextMode);
     modeRef.current = nextMode;
-
     setSecondsLeft(nextSeconds);
     secondsLeftRef.current = nextSeconds;
+    
   }
 
   function initTimer(){
@@ -52,7 +54,10 @@ function Timer() {
           tick();
         }, 1000)
 
+        
+
         return () => clearInterval(interval);
+        console.log(Toastify.success('Title', 'This is the body of the notification'))
     }, [settingsInfo])
 
     const totalSeconds = mode === "work" ? 
@@ -63,25 +68,33 @@ function Timer() {
     const minutes = Math.floor(secondsLeft / 60)
     let seconds = secondsLeft % 60
     if (seconds < 10)seconds = "0" + seconds;
-
+    
   return (
-    <div className='mt-[50px]'>
+    <div className='mt-[20px]'>
+      {mode === "work" ? 
+      
+      <h3 className=' flex text-2xl text-white font-semibold justify-center mb-4'>Work Time</h3> :
+      <h3 className=' flex text-2xl text-white font-semibold justify-center mb-4'> Break Time</h3> }
+
+
+
+
         <div className='h-[50%] flex items-center justify-center'>
-        <CircularProgressbar 
-        className='w-[300xp] h-[300px]'
+        <CircularProgressbar
+        className='w-[400xp] h-[400px]'
         value={percentage}
-         text={minutes+ ":" + seconds}
-         styles={buildStyles({
-            textColor:"#fff",
-            pathColor: mode === "work" ? green : red,
-            tailColor: "rgba(255,255,255,.2)"
-         })}
-        />
+        text={minutes + ':' + seconds}
+        styles={buildStyles({
+        textColor:'#fff',
+        pathColor:mode === 'work' ? green : red,
+        tailColor:'rgba(255,255,255,.2)',
+      })} />
         </div>
        
         <div className='flex justify-center mt-5'>
-            {isPaused ? <PlayButton/> :  <PauseButton/>}
-            
+        {isPaused
+          ? <PlayButton onClick={() => { setIsPaused(false); isPausedRef.current = false; }} />
+          : <PauseButton onClick={() => { setIsPaused(true); isPausedRef.current = true; }} />}
         </div>
          <div className='flex justify-center mt-5'>
             <SettingsButton onClick={() => settingsInfo.setShowSettings(true)} />
