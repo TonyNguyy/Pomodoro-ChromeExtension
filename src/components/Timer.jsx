@@ -5,7 +5,7 @@ import PlayButton from './PlayButton';
 import PauseButton from './PauseButton';
 import SettingsButton from './SettingsButton';
 import SettingsContext from './SettingsContext';
-import Toastify from "toastify";
+
 
 function Timer() {
     const red = "#f54e4e";
@@ -29,7 +29,6 @@ function Timer() {
     modeRef.current = nextMode;
     setSecondsLeft(nextSeconds);
     secondsLeftRef.current = nextSeconds;
-    
   }
 
   function initTimer(){
@@ -57,7 +56,6 @@ function Timer() {
         
 
         return () => clearInterval(interval);
-        console.log(Toastify.success('Title', 'This is the body of the notification'))
     }, [settingsInfo])
 
     const totalSeconds = mode === "work" ? 
