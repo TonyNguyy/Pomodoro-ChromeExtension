@@ -12,7 +12,7 @@ function App() {
   return (
     <main className='bg-[#30384b] w-screen h-screen overflow-hidden'>
       <h1 className='flex justify-center text-center mt-10 text-5xl text-pink-100 font-semibold'>
-        Pomodoro Counter
+        Pomodoro Counter!
       </h1>
 
       <SettingsContext.Provider value={{
